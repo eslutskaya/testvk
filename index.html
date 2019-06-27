@@ -1,0 +1,44 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://vk.com/js/api/openapi.js?154" type="text/javascript"></script>
+<button type="button" id="vkLogin">Войти</button>
+<script>
+$(document).ready(function () {
+
+  // Инициализация
+  VK.init({
+    apiId: 7035223
+  });
+
+  $('#vkLogin').on('click', function () {
+
+    // Авторизация
+    VK.Auth.login(
+      // callback-функция, которая будет вызвана после авторизации
+      function (response) {
+
+        console.log(response)
+
+        if (response.status === 'connected') { // авторизация прошла успешно
+
+          var user = response.session.user; //  информация о пользователе
+            /*
+             user.first_name - имя;
+             user.last_name - фамилия;
+             user.href - ссылка на страницу в формате https://vk.com/domain;
+             user.id  - идентификатор пользователя;
+             user.nickname -  отчество или никнейм (если указано);
+             */
+
+        } else if (response.status === 'not_authorized') { // пользователь авторизован в ВКонтакте, но не разрешил доступ приложению;
+
+        } else if (response.status === 'unknown') { // пользователь не авторизован ВКонтакте.
+        }
+      },
+      VK.access.FRIENDS
+    );
+
+  });
+
+
+      });
+</script>
